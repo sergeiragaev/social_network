@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.skillbox.userservice.data.model.ErrorDetail;
+import ru.skillbox.userservice.model.entity.ErrorDetail;
 
 import java.nio.file.AccessDeniedException;
 import java.util.Date;
