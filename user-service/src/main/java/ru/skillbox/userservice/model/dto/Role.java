@@ -1,4 +1,4 @@
-package ru.skillbox.userservice.data.dto;
+package ru.skillbox.userservice.model.dto;
 
 public enum Role {
 

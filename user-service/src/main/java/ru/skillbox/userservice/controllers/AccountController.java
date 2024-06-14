@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skillbox.userservice.data.dto.AccountByFilterDto;
-import ru.skillbox.userservice.data.dto.AccountDto;
-import ru.skillbox.userservice.data.dto.AccountRecoveryRq;
-import ru.skillbox.userservice.data.dto.AccountSearchDto;
-import ru.skillbox.userservice.data.dto.Pageable;
+import ru.skillbox.userservice.model.dto.AccountByFilterDto;
+import ru.skillbox.userservice.model.dto.AccountDto;
+import ru.skillbox.userservice.model.dto.AccountRecoveryRq;
+import ru.skillbox.userservice.model.dto.AccountSearchDto;
+import ru.skillbox.userservice.model.dto.Pageable;
 
 import java.util.List;
 
