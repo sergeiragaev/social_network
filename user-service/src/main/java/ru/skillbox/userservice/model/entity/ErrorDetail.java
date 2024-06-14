@@ -1,4 +1,4 @@
-package ru.skillbox.userservice.data.model;
+package ru.skillbox.userservice.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
