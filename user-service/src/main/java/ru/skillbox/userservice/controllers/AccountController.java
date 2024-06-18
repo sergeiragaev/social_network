@@ -34,8 +34,8 @@ public class AccountController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<AccountDto> getUserAccount() {
-        return ResponseEntity.ok(accountServices.getUserAccount());
+    public ResponseEntity<AccountDto> getUserAccount(Principal principal) {
+        return ResponseEntity.ok(accountServices.getUserAccount(principal.getName()));
     }
 
     @PutMapping("/me")
