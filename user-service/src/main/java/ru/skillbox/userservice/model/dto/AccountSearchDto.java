@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class AccountSearchDto {
-    List<Integer> ids;
+    List<Long> ids;
     String author;
     String firstName;
     String lastName;
