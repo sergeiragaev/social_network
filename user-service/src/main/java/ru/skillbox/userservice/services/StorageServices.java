@@ -4,7 +4,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skillbox.userservice.exceptions.DefaultBadRequestException;
+import ru.skillbox.userservice.exceptions.BadRequestException;
 import ru.skillbox.userservice.model.dto.AccountDto;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class StorageServices {
     public CompletableFuture<AccountDto> loadImageToStorage(MultipartFile file) {
         if (file.isEmpty()) {
             return CompletableFuture.failedFuture(
-                    new DefaultBadRequestException("Empty file")
+                    new BadRequestException("Empty file")
             );
         }
         //Image image = new Image();
@@ -33,7 +33,7 @@ public class StorageServices {
             //image.setImageType(ImageType.JPEG);
         } else {
             return CompletableFuture.failedFuture(
-                    new DefaultBadRequestException("incorrect file type")
+                    new BadRequestException("incorrect file type")
             );
         }
         try {
@@ -45,7 +45,7 @@ public class StorageServices {
             );
         } catch (IOException ex) {
             return CompletableFuture.failedFuture(
-                    new DefaultBadRequestException("Could not store file " + file.getOriginalFilename() + ". Please try again!")
+                    new BadRequestException("Could not store file " + file.getOriginalFilename() + ". Please try again!")
             );
         }
     }

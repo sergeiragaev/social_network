@@ -2,17 +2,19 @@ package ru.skillbox.userservice.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.skillbox.userservice.model.dto.AccountDto;
+import ru.skillbox.userservice.model.dto.Role;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "users")
+@Accessors(chain = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,12 +68,14 @@ public class User {
     @Column(name = "photo_name")
     private String photoName;
 
-    @ElementCollection(targetClass = RoleType.class, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "roles", nullable = false)
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private Set<RoleType> roles = new HashSet<>();
+//    @ElementCollection(targetClass = RoleType.class, fetch = FetchType.EAGER)
+//    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+//    @Column(name = "roles", nullable = false)
+//    @Enumerated(EnumType.STRING)
+//    @Builder.Default
+
+    @Column(name = "roles")
+    private Role role;
 
     @CreationTimestamp
     @Column(name = "created_on")
@@ -82,4 +86,30 @@ public class User {
     private LocalDateTime updatedOn;
 
     private String password;
+
+
+    public static User of(AccountDto accountDto) {
+        return new User()
+                .setEmail(accountDto.getEmail())
+                .setPhone(accountDto.getPhone())
+                .setAbout(accountDto.getAbout())
+                .setCity(accountDto.getCity())
+                .setCountry(accountDto.getCountry())
+                .setFirstName(accountDto.getFirstName())
+                .setLastName(accountDto.getLastName())
+                .setRegDate(accountDto.getRegDate())
+                .setBirthDate(accountDto.getBirthDate())
+                .setMessagePermission(accountDto.getMessagePermission())
+                .setLastOnlineTime(accountDto.getLastOnlineTime())
+                .setOnline(accountDto.isOnline())
+                .setBlocked(accountDto.isBlocked())
+                .setDeleted(accountDto.isDeleted())
+                .setPhotoId(accountDto.getPhotoId())
+                .setPhotoName(accountDto.getPhotoName())
+                .setRole(accountDto.getRole())
+                .setCreatedOn(accountDto.getCreatedOn())
+                .setUpdatedOn(accountDto.getUpdatedOn())
+                .setPassword(accountDto.getPassword());
+
+    }
 }

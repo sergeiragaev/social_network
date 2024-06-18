@@ -1,19 +1,15 @@
 package ru.skillbox.userservice.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.ObjectNotFoundException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.skillbox.userservice.exceptions.DefaultBadRequestException;
-import ru.skillbox.userservice.exceptions.DefaultNotAuthException;
+import ru.skillbox.userservice.exceptions.BadRequestException;
+import ru.skillbox.userservice.exceptions.NotAuthException;
 import ru.skillbox.userservice.model.entity.ErrorDetail;
 
-import java.nio.file.AccessDeniedException;
 import java.util.Date;
 
 @ControllerAdvice
@@ -22,13 +18,13 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler
-    public ResponseEntity<?> badRequest(DefaultBadRequestException exception) {
+    public ResponseEntity<?> badRequest(BadRequestException exception) {
         return templateResponseException(exception, HttpStatus.BAD_REQUEST);
     }
 
 
     @ExceptionHandler
-    public ResponseEntity<?> unAuthorized(DefaultNotAuthException exception) {
+    public ResponseEntity<?> unAuthorized(NotAuthException exception) {
         return templateResponseException(exception, HttpStatus.UNAUTHORIZED);
     }
 
