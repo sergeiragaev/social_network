@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class AccountDto {
-    Integer id;
+    long id;
     String email;
     String phone;
     String photo;
