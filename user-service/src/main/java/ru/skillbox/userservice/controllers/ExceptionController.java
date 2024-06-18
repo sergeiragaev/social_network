@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ru.skillbox.userservice.exceptions.DefaultBadRequestException;
+import ru.skillbox.userservice.exceptions.DefaultNotAuthException;
 import ru.skillbox.userservice.model.entity.ErrorDetail;
 
 import java.nio.file.AccessDeniedException;
@@ -19,14 +21,15 @@ import java.util.Date;
 public class ExceptionController extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler({ChangeSetPersister.NotFoundException.class, ObjectNotFoundException.class, HttpClientErrorException.NotFound.class})
-    public ResponseEntity<?> notFoundObject(Exception exception) {
-        return templateResponseException(exception, HttpStatus.NOT_FOUND);
+    @ExceptionHandler
+    public ResponseEntity<?> badRequest(DefaultBadRequestException exception) {
+        return templateResponseException(exception, HttpStatus.BAD_REQUEST);
     }
 
+
     @ExceptionHandler
-    public ResponseEntity<?> accessDenied(AccessDeniedException exception) {
-        return templateResponseException(exception, HttpStatus.FORBIDDEN);
+    public ResponseEntity<?> unAuthorized(DefaultNotAuthException exception) {
+        return templateResponseException(exception, HttpStatus.UNAUTHORIZED);
     }
 
 

@@ -8,14 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skillbox.userservice.model.dto.AccountDto;
+import ru.skillbox.userservice.services.StorageServices;
 
 @RestController
 @RequestMapping("/storage")
 @RequiredArgsConstructor
 public class StorageController {
 
+    private final StorageServices storageServices;
+
     @PostMapping
-    public ResponseEntity<AccountDto> uploadFile(@RequestBody MultipartFile file) {
-        return ResponseEntity.ok(new AccountDto());
+    public ResponseEntity<?> uploadFile(@RequestBody MultipartFile file) {
+        return ResponseEntity.ok(storageServices.loadImageToStorage(file));
     }
 }
