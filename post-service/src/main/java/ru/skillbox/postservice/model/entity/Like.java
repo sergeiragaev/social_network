@@ -14,9 +14,14 @@ public class Like {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "post_id", columnDefinition = "BIGINT NOT NULL")
-    private long postId;
+    @ManyToOne
+    @JoinColumn(name="post_id")
+    private Post post;
 
-    @Column(name = "comment_id", columnDefinition = "BIGINT")
-    private long commentId;
+    @ManyToOne
+    @JoinColumn(name="comment_id")
+    private Comment comment;
+
+    @Column(name = "user_id", columnDefinition = "BIGINT NOT NULL")
+    private Long userId;
 }

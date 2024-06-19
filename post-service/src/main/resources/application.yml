@@ -19,3 +19,5 @@ spring:
     drop-first: false
 server:
   port: 8082
+app:
+  apiPrefix: /api/v1

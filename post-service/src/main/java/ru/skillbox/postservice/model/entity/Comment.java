@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -46,6 +47,12 @@ public class Comment {
 
     @Column(name = "is_delete")
     private boolean isDelete;
+
+    @OneToMany(mappedBy="comment")
+    private Set<Like> likes;
+
+    @Column(name = "my_like")
+    private boolean myLike;
 
     @Column(name = "image_path")
     private String imagePath;

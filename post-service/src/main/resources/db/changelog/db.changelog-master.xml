@@ -24,6 +24,7 @@
             <column name="type" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="my_like" type="BOOLEAN"/>
         </createTable>
     </changeSet>
 
@@ -71,6 +72,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="image_path" type="VARCHAR(255)"/>
+            <column name="my_like" type="BOOLEAN"/>
         </createTable>
     </changeSet>
     <changeSet id="createLikeTable" author="Sergei Ragaev">
@@ -79,10 +81,15 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="comment_id" type="BIGINT"/>
-            <column name="post_id" type="BIGINT">
+            <column name="post_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
+    <changeSet id="createForeignKeysForLikeTable" author="Sergei Ragaev">
+        <addForeignKeyConstraint baseColumnNames="comment_id" baseTableName="likes" constraintName="fk_comment_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="comments" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="post_id" baseTableName="likes" constraintName="fk_post_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="posts" validate="true"/>
     </changeSet>
 
 </databaseChangeLog>
