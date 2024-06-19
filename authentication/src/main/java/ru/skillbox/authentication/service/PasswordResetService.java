@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import ru.skillbox.authentication.Entity.PasswordResetToken;
 import ru.skillbox.authentication.Entity.Users;
 import ru.skillbox.authentication.Repository.PasswordResetTokenRepository;
@@ -13,6 +14,7 @@ import ru.skillbox.authentication.Repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Service
 public class PasswordResetService {
     @Autowired
     private PasswordResetTokenRepository passwordResetTokenRepository;

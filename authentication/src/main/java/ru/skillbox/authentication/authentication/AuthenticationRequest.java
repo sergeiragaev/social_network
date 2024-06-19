@@ -1,8 +1,5 @@
 package ru.skillbox.authentication.authentication;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 
 public class AuthenticationRequest {
