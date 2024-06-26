@@ -1,5 +1,6 @@
 package ru.skillbox.userservice.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -9,12 +10,14 @@ import ru.skillbox.userservice.model.dto.AccountDto;
 import ru.skillbox.userservice.model.dto.Role;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "users")
 @Accessors(chain = true)
+@ToString(exclude = "friends")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,6 +84,14 @@ public class User {
 
     private String password;
 
+    @JsonIgnoreProperties("friends")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "friendship",
+            joinColumns = @JoinColumn(name = "account_id_from",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "account_id_to",
+                    referencedColumnName = "id"))
+    private Set<User> friends;
 
     public static User of(AccountDto accountDto) {
         return new User()
