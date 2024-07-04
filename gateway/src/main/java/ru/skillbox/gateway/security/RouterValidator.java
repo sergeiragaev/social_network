@@ -10,7 +10,6 @@ public class RouterValidator {
 
     public static final List<Pattern> openEndpoints = List.of(
             Pattern.compile("/registration"),
-            Pattern.compile("/captcha"),
             Pattern.compile("/api/v1/auth/register"),
             Pattern.compile("/api/v1/auth/login"),
             Pattern.compile("/api/v1/auth/password/recovery/*"),

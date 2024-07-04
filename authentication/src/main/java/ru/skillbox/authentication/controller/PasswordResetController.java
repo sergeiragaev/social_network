@@ -16,7 +16,7 @@ import ru.skillbox.authentication.service.PasswordService;
 import ru.skillbox.authentication.service.PasswordResetService;
 
 @RestController
-@RequestMapping("/password")
+@RequestMapping("/api/v1/auth/password")
 @RequiredArgsConstructor
 @Slf4j
 public class PasswordResetController {
