@@ -26,7 +26,7 @@ public class PasswordResetController {
     private final PasswordService passwordService;
     private final UserRepository userRepository;
 
-    @PostMapping("/recovery")
+    @PostMapping("/recovery/")
     public ResponseEntity<SimpleResponse> resetPassword(
             @RequestBody RecoveryPasswordRequest request) {
         if (!userRepository.existsByEmail(request.getEmail())) {

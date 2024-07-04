@@ -106,7 +106,7 @@ public class SecurityBeanConfig {
                         auth.requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/v3/api-docs","/swagger-ui.html", "/swagger-ui/**")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/login", "/register", "/captcha").permitAll()
                                 .anyRequest().authenticated()
                                 )
                 .csrf(AbstractHttpConfigurer::disable)
