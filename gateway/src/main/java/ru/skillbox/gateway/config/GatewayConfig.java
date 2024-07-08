@@ -36,6 +36,11 @@ public class GatewayConfig {
                                 .uri("lb://USER-SERVICE")
                 )
                 .route(
+                        "user_route", r -> r.path("/api/v1/friends/**")
+                                .filters(f -> f.filter(filter))
+                                .uri("lb://USER-SERVICE")
+                )
+                .route(
                         "dialog_route", r -> r.path("/api/dialog/**")
                                 .filters(f -> f.filter(filter))
                                 .uri("lb://DIALOG-SERVICE")

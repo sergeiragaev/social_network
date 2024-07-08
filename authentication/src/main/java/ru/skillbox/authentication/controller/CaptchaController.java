@@ -1,9 +1,8 @@
-package ru.skillbox.authentication.controller.captcha;
+package ru.skillbox.authentication.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skillbox.authentication.service.CaptchaService;
 
@@ -13,14 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
 public class CaptchaController {
 
     private final CaptchaService captchaService;
 
     @GetMapping("/captcha")
-    public ResponseEntity<?> getCaptcha() throws IOException {
+    public ResponseEntity<Map<String , String>> getCaptcha() throws IOException {
         String token = captchaService.generateCaptcha();
         String text = captchaService.getHashMap().get(token).getText();
         String image = captchaService.generateCaptchaImage(text);

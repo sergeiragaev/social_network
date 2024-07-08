@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,8 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.skillbox.authentication.service.impl.UserDetailsServiceImpl;
 import ru.skillbox.authentication.service.utils.CryptoTool;
-
-import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
@@ -47,24 +43,6 @@ public class SecurityBeanConfig {
         provider.setPasswordEncoder(passwordEncoderImpl());
 
         return provider;
-    }
-
-    @Bean
-    public JavaMailSender getJavaMailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-
-        mailSender.setHost("smtp.yandex.ru");
-        mailSender.setPort(465);
-        mailSender.setProtocol("smtps");
-        mailSender.setUsername("ru.kirill.service@yandex.ru");
-        mailSender.setPassword("kfixqwdiisdphnuq");
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-
-        return mailSender;
     }
 
     @Bean
@@ -102,13 +80,7 @@ public class SecurityBeanConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests((auth) ->
-                        auth.requestMatchers("/api/v1/auth/**")
-                                .permitAll()
-                                .requestMatchers("/swagger-ui/**")
-                                .permitAll()
-                                .requestMatchers("/v3/api-docs/**")
-                                .permitAll()
-                                .anyRequest().authenticated())
+                        auth.requestMatchers("/**").permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
