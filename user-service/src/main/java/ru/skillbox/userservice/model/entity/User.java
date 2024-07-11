@@ -15,8 +15,9 @@ import java.util.Set;
 @Table(name = "users")
 @Accessors(chain = true)
 @ToString(exclude = "friends")
-@Data
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {

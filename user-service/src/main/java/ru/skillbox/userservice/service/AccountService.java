@@ -15,7 +15,6 @@ import ru.skillbox.userservice.repository.UserRepository;
 import ru.skillbox.userservice.util.BeanUtil;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +69,7 @@ public class AccountService {
     public List<AccountDto> getAllAccounts(Pageable page, Long id) {
         // TODO: когда в репозитории добавим пагинацию - нужно изменить вызов и передавать page
         List<User> users = userRepository.findAll();
-        return users.stream().map((user) -> userMapper.userToResponse(id, user)).collect(Collectors.toList());
+        return users.stream().map((user) -> userMapper.userToResponse(id, user)).toList();
     }
 
     @Transactional
@@ -111,6 +110,6 @@ public class AccountService {
     public List<AccountDto> searchAccount(boolean isDeleted, long authUserId) {
         List<User> users = userRepository.findAllByIsDeleted(isDeleted);
 
-        return users.stream().map(user -> userMapper.userToResponse(authUserId, user)).collect(Collectors.toList());
+        return users.stream().map(user -> userMapper.userToResponse(authUserId, user)).toList();
     }
 }
