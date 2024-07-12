@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class StorageService {
+public class StorageServices {
 
     // private final ImageRepository imageRepository;
 

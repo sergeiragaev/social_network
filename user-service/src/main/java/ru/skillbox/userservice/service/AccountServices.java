@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AccountService {
+public class AccountServices {
 
     private final UserRepository userRepository;
     private final UserMapperV1 userMapper;

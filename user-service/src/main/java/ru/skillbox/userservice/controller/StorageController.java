@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skillbox.userservice.service.StorageService;
+import ru.skillbox.userservice.service.StorageServices;
 
 @RestController
 @RequestMapping("/storage")
 @RequiredArgsConstructor
 public class StorageController {
 
-    private final StorageService storageService;
+    private final StorageServices storageServices;
 
     @PostMapping
     public ResponseEntity<?> uploadFile(@RequestBody MultipartFile file) {
-        return ResponseEntity.ok(storageService.loadImageToStorage(file));
+        return ResponseEntity.ok(storageServices.loadImageToStorage(file));
     }
 }
