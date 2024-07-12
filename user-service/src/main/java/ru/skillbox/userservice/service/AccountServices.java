@@ -1,48 +1,59 @@
 package ru.skillbox.userservice.service;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.skillbox.userservice.exceptions.AccountAlreadyExistsException;
-import ru.skillbox.userservice.exceptions.NoSuchAccountException;
-import ru.skillbox.userservice.exceptions.NotAuthException;
-import ru.skillbox.userservice.model.dto.AccountByFilterDto;
-import ru.skillbox.userservice.model.dto.AccountDto;
-import ru.skillbox.userservice.model.dto.AccountRecoveryRq;
-import ru.skillbox.userservice.model.dto.AccountSearchDto;
+import org.springframework.transaction.annotation.Transactional;
+import ru.skillbox.userservice.exception.AccountAlreadyExistsException;
+import ru.skillbox.userservice.exception.NoSuchAccountException;
+import ru.skillbox.userservice.exception.NotAuthException;
+import ru.skillbox.userservice.mapper.V1.UserMapperV1;
+import ru.skillbox.userservice.model.dto.*;
 import ru.skillbox.userservice.model.entity.User;
 import ru.skillbox.userservice.repository.UserRepository;
+import ru.skillbox.userservice.util.BeanUtil;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AccountServices {
 
     private final UserRepository userRepository;
+    private final UserMapperV1 userMapper;
 
     public String recoveryUserAccount(AccountRecoveryRq recoveryRequest) {
-        // logic with DB
         return recoveryRequest.getEmail();
     }
 
     public AccountDto getUserAccount(String userEmail) {
-        Optional<User> user = userRepository.findByEmail(userEmail);
-        return AccountDto.of(user.orElseThrow(() -> new NoSuchAccountException("Can't find Account with email: " + userEmail)));
+        User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NoSuchAccountException("Can't find Account with email: " + userEmail));
+        return userMapper.userToResponse(user.getId(), user);
     }
 
-    public AccountDto updateUserAccount(AccountDto accountDto) {
-        // logic with DB
-        return new AccountDto();
+    @Transactional
+    public AccountDto updateUserAccount(AccountDto accountDto, Long id) {
+        if (accountDto.getId() != null && !accountDto.getId().equals(id))
+            new NotAuthException("Can't update Account with id:" + id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchAccountException("Can't find Account with id:" + id));
+        AccountDto existedAccount = userMapper.userToResponse(id, user);
+        BeanUtil.copyNonNullProperties(accountDto, existedAccount);
+
+        return userMapper.userToResponse(id, userRepository.save(userMapper.requestToUser(id, existedAccount)));
     }
 
-    public String deleteUserAccount(String userEmail) {
-        if (userEmail == null) {
+    @Transactional
+    public String deleteUserAccount(Long userId) {
+        if (userId == null) {
             throw new NotAuthException("No auth user found!");
         }
-        // logic with DB
-        return userEmail;
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchAccountException("Can't delete Account with id:" + userId));
+        user.setDeleted(true);
+        userRepository.save(user);
+
+        return "Account with id: " + userId + " deleted";
     }
 
     public String blockAccount(boolean block, long id) {
@@ -55,34 +66,35 @@ public class AccountServices {
         }
     }
 
-    public List<AccountDto> getAllAccounts(Pageable page) {
+    public List<AccountDto> getAllAccounts(Pageable page, Long id) {
         // TODO: когда в репозитории добавим пагинацию - нужно изменить вызов и передавать page
         List<User> users = userRepository.findAll();
-        return users.stream().map(AccountDto::of).toList();
+        return users.stream().map((user) -> userMapper.userToResponse(id, user)).toList();
     }
 
-    public long createAccount(AccountDto accountDto) {
+    @Transactional
+    public long createAccount(@Valid AccountDto accountDto) {
         if (userRepository.findByEmail(accountDto.getEmail()).isPresent()) {
             throw new AccountAlreadyExistsException("Account with such email already registered!");
         }
-        User user = User.of(accountDto);
+        User user = userMapper.requestToUser(accountDto.getId(), accountDto);
         return userRepository.save(user).getId();
     }
 
     public AccountDto searchAccountByFilter(AccountByFilterDto filterDto) {
         // logic with DB
-        return new AccountDto();
+        return AccountDto.builder().build();
     }
 
     public AccountDto getAccountById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        AccountDto account = AccountDto.of(user.orElseThrow(() -> new NoSuchAccountException("Can't find Account with id: " + id)));
-        return account;
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchAccountException("Can't find Account with id: " + id));
+        return userMapper.userToResponse(id, user);
     }
 
     public List<AccountDto> searchAccount(AccountSearchDto accountSearchDto, Pageable pageable) {
         // logic with DB
-        return List.of(new AccountDto());
+        return List.of(AccountDto.builder().build());
     }
 
     public List<Long> getAllIds() {
@@ -93,5 +105,11 @@ public class AccountServices {
     public List<AccountDto> getAccountIds(Long[] ids, Pageable page) {
         // logic with DB
         return List.of();
+    }
+
+    public List<AccountDto> searchAccount(boolean isDeleted, long authUserId) {
+        List<User> users = userRepository.findAllByIsDeleted(isDeleted);
+
+        return users.stream().map(user -> userMapper.userToResponse(authUserId, user)).toList();
     }
 }

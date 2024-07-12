@@ -1,6 +1,7 @@
 package ru.skillbox.userservice.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skillbox.userservice.model.dto.AccountByFilterDto;
 import ru.skillbox.userservice.model.dto.AccountDto;
 import ru.skillbox.userservice.model.dto.AccountRecoveryRq;
-import ru.skillbox.userservice.model.dto.AccountSearchDto;
 import ru.skillbox.userservice.service.AccountServices;
 
-import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/account")
@@ -30,7 +30,7 @@ public class AccountController {
     private final AccountServices accountServices;
 
     @PutMapping("/recovery")
-    public ResponseEntity<String> recoveryUserAccount(@RequestBody AccountRecoveryRq recoveryRq) {
+    public ResponseEntity<String> recoveryUserAccount(@Valid @RequestBody AccountRecoveryRq recoveryRq) {
         return ResponseEntity.ok(accountServices.recoveryUserAccount(recoveryRq));
     }
 
@@ -40,13 +40,13 @@ public class AccountController {
     }
 
     @PutMapping("/me")
-    public ResponseEntity<AccountDto> updateUserAccount(@RequestBody AccountDto accountDto) {
-        return ResponseEntity.ok(accountServices.updateUserAccount(accountDto));
+    public ResponseEntity<AccountDto> updateUserAccount(@Valid @RequestBody AccountDto accountDto, HttpServletRequest request) {
+        return ResponseEntity.ok(accountServices.updateUserAccount(accountDto, Long.parseLong(request.getHeader("id"))));
     }
 
     @DeleteMapping("/me")
-    public ResponseEntity<String> deleteUserAccount(Principal principal) {
-        return ResponseEntity.ok(accountServices.deleteUserAccount(principal.getName()));
+    public ResponseEntity<String> deleteUserAccount(HttpServletRequest request) {
+        return ResponseEntity.ok(accountServices.deleteUserAccount(Long.parseLong(request.getHeader("id"))));
     }
 
     @PutMapping("/block/{id}")
@@ -60,8 +60,8 @@ public class AccountController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllAccounts(@RequestParam Pageable page) {
-        return ResponseEntity.ok(accountServices.getAllAccounts(page));
+    public ResponseEntity<?> getAllAccounts(@RequestParam Pageable page, HttpServletRequest request) {
+        return ResponseEntity.ok(accountServices.getAllAccounts(page, Long.parseLong(request.getHeader("id"))));
     }
 
     @PostMapping
@@ -80,8 +80,8 @@ public class AccountController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchAccount(@RequestParam AccountSearchDto searchDto, @RequestParam Pageable page) {
-        return ResponseEntity.ok(accountServices.searchAccount(searchDto, page));
+    public ResponseEntity<List<AccountDto>> searchAccount(@RequestParam boolean isDeleted, HttpServletRequest request) {
+        return ResponseEntity.ok(accountServices.searchAccount(isDeleted, Long.parseLong(request.getHeader("id"))));
     }
 
     @GetMapping("/ids")
