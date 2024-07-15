@@ -23,7 +23,7 @@ public class NotificationController {
 
     private NotificationService notificationService;
 
-    @GetMapping
+    @GetMapping("/settings")
     public NotificationSettingResponse getNotificationSetting(HttpServletRequest httpServletRequest){
 
         return notificationService.getSettings(Long.parseLong(httpServletRequest.getHeader("id")));
@@ -44,7 +44,7 @@ public class NotificationController {
         return ResponseEntity.ok(hashMap);
     }
 
-    @PostMapping
+    @PostMapping("/settings")
     public ResponseEntity<?> createNotificationSetting(@RequestBody NotificationSettingDto notificationSettingDto){
         notificationService.createSettings(notificationSettingDto);
         return ResponseEntity.ok(notificationSettingDto);
