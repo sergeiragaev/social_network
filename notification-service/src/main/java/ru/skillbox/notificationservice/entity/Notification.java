@@ -1,6 +1,6 @@
 package ru.skillbox.notificationservice.entity;
 
-import ch.qos.logback.core.joran.spi.NoAutoStart;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
