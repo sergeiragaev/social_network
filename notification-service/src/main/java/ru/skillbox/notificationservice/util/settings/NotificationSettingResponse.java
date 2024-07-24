@@ -1,4 +1,4 @@
-package ru.skillbox.notificationservice.settings;
+package ru.skillbox.notificationservice.util.settings;
 
 import lombok.Getter;
 import lombok.Setter;

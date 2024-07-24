@@ -29,7 +29,7 @@ public class DialogMapperDecorator implements DialogMapper{
     private DialogMapper delegate;
     @Autowired
     private MessageRepository messageRepository;
-    @Autowired
+
     private MessageMapper messageMapper;
     private final RestTemplate restTemplate = new RestTemplate();
 

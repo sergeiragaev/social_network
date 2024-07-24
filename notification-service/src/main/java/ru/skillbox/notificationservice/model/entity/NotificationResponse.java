@@ -1,4 +1,4 @@
-package ru.skillbox.notificationservice.entity;
+package ru.skillbox.notificationservice.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;

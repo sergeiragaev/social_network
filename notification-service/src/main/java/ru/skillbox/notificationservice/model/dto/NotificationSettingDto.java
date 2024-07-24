@@ -1,4 +1,4 @@
-package ru.skillbox.notificationservice.dto;
+package ru.skillbox.notificationservice.model.dto;
 
 
 import lombok.Getter;

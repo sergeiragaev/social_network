@@ -1,4 +1,4 @@
-package ru.skillbox.notificationservice.settings;
+package ru.skillbox.notificationservice.util.settings;
 
 
 import jakarta.persistence.*;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "notificationSettings")
+@Table(name = "notification_settings")
 public class NotificationSetting {
 
     @Id
