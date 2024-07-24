@@ -1,4 +1,4 @@
-package ru.skillbox.notificationservice.status;
+package ru.skillbox.notificationservice.util.status;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

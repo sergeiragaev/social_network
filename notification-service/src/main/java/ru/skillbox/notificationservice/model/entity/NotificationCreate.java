@@ -1,4 +1,4 @@
-package ru.skillbox.notificationservice.entity;
+package ru.skillbox.notificationservice.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "notification_create")
+@Table(name = "notifications")
 public class NotificationCreate {
 
     @Id

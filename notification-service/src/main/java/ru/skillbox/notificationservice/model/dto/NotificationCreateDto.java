@@ -1,8 +1,8 @@
-package ru.skillbox.notificationservice.dto;
+package ru.skillbox.notificationservice.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.skillbox.notificationservice.entity.NotificationType;
+import ru.skillbox.notificationservice.model.entity.NotificationType;
 
 import java.time.LocalDateTime;
 
