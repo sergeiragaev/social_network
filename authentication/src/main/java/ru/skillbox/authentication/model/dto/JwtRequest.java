@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class JwtRq {
+public class JwtRequest {
 
     private String token;
 }

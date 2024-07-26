@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.skillbox.dialogservice.model.dto.JwtRq;
+import ru.skillbox.dialogservice.model.dto.JwtRequest;
 import ru.skillbox.dialogservice.service.feign.DialogFeignClient;
 
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class TokenFilter extends OncePerRequestFilter {
                 new TokenAuthentication(null, false, null);
         if (token != null) {
             try {
-                Map<String, String> tokenPayload = feignClient.validateToken(new JwtRq(token));
+                Map<String, String> tokenPayload = feignClient.validateToken(new JwtRequest(token));
                 authentication = new TokenAuthentication(
                         Arrays.stream(tokenPayload.get("authorities").split(","))
                                 .map(authority -> (GrantedAuthority) () -> authority)

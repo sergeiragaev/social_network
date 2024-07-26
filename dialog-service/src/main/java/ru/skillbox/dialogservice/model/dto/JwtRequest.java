@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class JwtRq {
+public class JwtRequest {
 
     private String token;
 }
