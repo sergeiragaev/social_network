@@ -58,6 +58,8 @@ services:
       monitoring:
         aliases:
           - grafana
+    restart: on-failure
+
   prometheus:
     image: prom/prometheus
     ports:
@@ -69,6 +71,8 @@ services:
       monitoring:
         aliases:
           - prometheus
+    restart: on-failure
+
 volumes:
   kafka:
   database-data:
