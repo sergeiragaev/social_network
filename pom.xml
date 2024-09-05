@@ -28,7 +28,8 @@
         <sonar.coverage.exclusions>
             **/config/**, **/dto/**, **/exception/**,**/handler/**, **/mapper/**,
             **/model/**, **/processor/**, **/repository/**, **/adminservice/**, **Application.java,
-            **/Admin**, **/*Serializer.java, **/*serializer.java, **/*Constants.java, **/RouterValidator.java
+            **/Admin**, **/*Serializer.java, **/*serializer.java, **/*Constants.java, **/RouterValidator.java,
+            **Configuration.java
         </sonar.coverage.exclusions>
     </properties>
 
