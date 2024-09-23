@@ -3,6 +3,7 @@ package ru.skillbox.postservice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,8 +31,8 @@ public class CommentController {
     public void updateComment(
             @PathVariable("id") Long postId,
             @RequestBody CommentDto commentDto,
-            @RequestHeader("id") Long currentAuthUserId
-    ) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
         commentService.updateComment(postId, commentDto, currentAuthUserId);
     }
 
@@ -41,8 +42,8 @@ public class CommentController {
     public void deleteComment(
             @PathVariable("id") Long postId,
             @PathVariable Long commentId,
-            @RequestHeader("id") Long currentAuthUserId
-    ) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
         commentService.deleteComment(postId, commentId, currentAuthUserId);
     }
 
@@ -54,8 +55,8 @@ public class CommentController {
             @RequestParam("size") int size,
             @RequestParam("sort") List<String> sort,
             @RequestParam(value = "isDeleted", defaultValue = "false") boolean isDeleted,
-            @RequestHeader("id") Long currentAuthUserId
-    ) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
         PageRequest pageRequest = PageRequest.of(page, size, SortCreatorUtil.createSort(sort));
         return ResponseEntity.ok(commentService.getCommentsOnPost(postId, pageRequest, currentAuthUserId, isDeleted));
     }
@@ -65,8 +66,8 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createComment(@PathVariable("id") Long postId,
                               @RequestBody CommentDto commentDto,
-                              @RequestHeader("id") Long currentAuthUserId
-    ) {
+                              HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
         commentService.createNewComment(postId, commentDto, currentAuthUserId);
     }
 
@@ -79,10 +80,9 @@ public class CommentController {
             @RequestParam("size") int size,
             @RequestParam("sort") List<String> sort,
             @RequestParam(value = "isDeleted", defaultValue = "false") boolean isDeleted,
-            @RequestHeader("id") Long currentAuthUserId
-    ) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
         Pageable pageable = PageRequest.of(page, size, SortCreatorUtil.createSort(sort));
         return ResponseEntity.ok(commentService.getSubComments(postId, commentId, pageable, currentAuthUserId, isDeleted));
     }
-
 }
