@@ -15,7 +15,7 @@
 	<description>Spring Cloud discovery</description>
 
 	<properties>
-		<sonar.projectKey>javapro_team48_social_network_c4e90834-7b5a-414c-b190-15ffdb3826fd-${project.groupId}:${project.artifactId}</sonar.projectKey>
+		<sonar.projectKey>sergei_ragaev_social_network_21970228-ecf0-4c1f-b693-16589c389aa1-${project.groupId}:${project.artifactId}</sonar.projectKey>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../jacoco-aggregator/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 

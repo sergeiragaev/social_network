@@ -18,8 +18,8 @@
         <java.version>17</java.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.projectKey>javapro_team48_social_network_c4e90834-7b5a-414c-b190-15ffdb3826fd</sonar.projectKey>
-        <sonar.projectName>social_network</sonar.projectName>
+        <sonar.projectKey>sergei_ragaev_social_network_21970228-ecf0-4c1f-b693-16589c389aa1</sonar.projectKey>
+        <sonar.projectName>Social Network</sonar.projectName>
         <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
