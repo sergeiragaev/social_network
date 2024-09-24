@@ -58,12 +58,6 @@ public class PostSpecificationService {
 
     }
 
-    // TODO: сделать когда будет полностью готова FriendShip-логика
-    private static void addFriendsPredicate(PostSearchDto postSearchDto) {
-        if (postSearchDto.getWithFriends() != null) {
-        }
-    }
-
     private static void addPostTextPredicate(PostSearchDto postSearchDto, Root<Post> root, CriteriaBuilder builder, List<Predicate> predicates) {
         if (postSearchDto.getPostText() != null && !postSearchDto.getPostText().isEmpty()) {
             predicates.add(builder.equal(root.get("postText"), postSearchDto.getPostText()));
