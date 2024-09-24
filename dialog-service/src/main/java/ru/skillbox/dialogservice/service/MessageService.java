@@ -6,17 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.skillbox.commonlib.dto.statistics.CountDto;
 import ru.skillbox.dialogservice.mapper.MessageMapper;
-import ru.skillbox.dialogservice.model.dto.DialogRs;
 import ru.skillbox.dialogservice.model.dto.MessageDto;
 import ru.skillbox.dialogservice.model.entity.Message;
 import ru.skillbox.dialogservice.model.enums.MessageStatus;
 import ru.skillbox.dialogservice.processor.DialogMessageProcessor;
 import ru.skillbox.dialogservice.repository.MessageRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -54,21 +56,23 @@ public class MessageService {
         this.dialogService = dialogService;
     }
 
-    public CountDto getUnread(Long authUserId) {
+    public CountDto getUnread() {
+        long currentAuthUserId = Long.parseLong(Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication().getName()));
         int messagesAmount = Integer.parseInt(String.valueOf(messageRepository
-                .count(getAuthUserUnreadMessagesSpecification(authUserId))));
+                .count(getAuthUserUnreadMessagesSpecification(currentAuthUserId))));
         log.info("Get unread messages amount - {}", messagesAmount);
         return new CountDto(messagesAmount);
     }
 
-    public Page<MessageDto> getMessages(Long authUserId, Long conversationPartnerId,
+    public Page<MessageDto> getMessages(Long conversationPartnerId,
                                         Integer page, String sort) {
+        long currentAuthUserId = Long.parseLong(Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication().getName()));
         String[] sorts = sort.split(",");
         Pageable nextPage = PageRequest.of(page, Integer.MAX_VALUE,
                 Sort.by(Sort.Direction.fromString(sorts[1]), sorts[0]));
 
         List<Message> messages = messageRepository.findAll(
-                getMessageSpecification(authUserId, conversationPartnerId), nextPage).toList();
+                getMessageSpecification(currentAuthUserId, conversationPartnerId), nextPage).toList();
 
         log.info("Get messages {}", messages);
 
@@ -92,16 +96,16 @@ public class MessageService {
 
     public void updateDialogMessages(Long currentAuthUserId, Long dialogId) {
         log.info("Update dialog messages dialog id - {}", dialogId);
+        List<Message> list = new ArrayList<>();
+        for (Message message : messageRepository.findByDialogId(dialogId)) {
+            if (message.getRecipientId().equals(currentAuthUserId) && message.getStatus().equals(MessageStatus.SENT)) {
+                message.setStatus(MessageStatus.READ);
+                list.add(message);
+            }
+
+        }
         messageRepository.saveAll(
-                messageRepository.findByDialogId(dialogId)
-                        .stream()
-                        .filter(message -> message.getRecipientId().equals(currentAuthUserId))
-                        .filter(message -> message.getStatus().equals(MessageStatus.SENT))
-                        .map(message -> {
-                            message.setStatus(MessageStatus.READ);
-                            return message;
-                        })
-                        .toList()
+                list
         );
     }
 }

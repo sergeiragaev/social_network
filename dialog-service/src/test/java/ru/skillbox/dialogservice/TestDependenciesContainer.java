@@ -44,18 +44,11 @@ public class TestDependenciesContainer {
     protected String apiPrefix;
 
     protected Dialog saveDialogInDbAndGet(DialogDto dialogDto) {
-        Dialog dialog = new Dialog();
-        dialog.setMember1Id(dialogDto.getMember1Id());
-        dialog.setMember2Id(dialogDto.getMember2Id());
-        dialog.setUnreadCount(dialogDto.getUnreadCount());
-        dialogRepository.save(dialog);
-        return dialog;
+        return dialogService.createNewDialog(dialogDto.getMember1Id(), dialogDto.getMember2Id());
     }
     protected Message saveMessageInDbAndGet(MessageDto messageDto) {
-        Message message = messageMapper.toEntity(messageDto);
-        message.setId(null);
-        messageRepository.save(message);
-        return message;
+        messageService.saveMessage(messageDto);
+        return messageRepository.findById(1L).get();
     }
     protected MessageDto generateTestMessageDto(Long dialogId) {
         return MessageDto.builder()

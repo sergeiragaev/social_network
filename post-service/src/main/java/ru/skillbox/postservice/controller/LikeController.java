@@ -3,6 +3,7 @@ package ru.skillbox.postservice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,8 @@ public class LikeController {
     public void likePost(
             @PathVariable("id") Long postId,
             @RequestBody LikeDto likeDto,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         likeService.likePost(postId, likeDto, currentAuthUserId);
     }
 
@@ -32,7 +34,8 @@ public class LikeController {
     @Operation(summary = "Unlike post")
     public void unLikePost(
             @PathVariable("id") Long postId,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         likeService.unlikePost(postId, currentAuthUserId);
     }
 
@@ -42,7 +45,8 @@ public class LikeController {
     public void likeComment(
             @PathVariable("id") Long postId,
             @PathVariable("commentId") Long commentId,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         likeService.likeComment(postId, commentId, currentAuthUserId);
     }
 
@@ -52,7 +56,8 @@ public class LikeController {
     public void unLikeComment(
             @PathVariable("id") Long postId,
             @PathVariable("commentId") Long commentId,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         likeService.unlikeComment(postId, commentId, currentAuthUserId);
     }
 }
