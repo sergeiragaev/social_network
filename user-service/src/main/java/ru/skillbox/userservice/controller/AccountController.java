@@ -45,7 +45,7 @@ public class AccountController {
     @Operation(summary = "Get user account")
     public ResponseEntity<AccountDto> getUserAccount(
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.getAccountById(currentAuthUserId, currentAuthUserId));
     }
 
@@ -54,7 +54,7 @@ public class AccountController {
     public ResponseEntity<AccountDto> updateUserAccount(
             @Valid @RequestBody AccountDto accountDto,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.updateUserAccount(accountDto, currentAuthUserId));
     }
 
@@ -62,7 +62,7 @@ public class AccountController {
     @Operation(summary = "Delete user account")
     public ResponseEntity<String> deleteUserAccount(
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.deleteUserAccount(currentAuthUserId));
     }
 
@@ -73,7 +73,7 @@ public class AccountController {
             @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "sort") List<String> sort,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService
                 .getAllAccounts(PageRequest.of(page, size,
                         SortCreatorUtil.createSort(sort)), currentAuthUserId));
@@ -84,7 +84,7 @@ public class AccountController {
     public ResponseEntity<Long> createAccount(
             @RequestBody AccountDto accountDto,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.createAccount(accountDto, currentAuthUserId));
     }
@@ -94,7 +94,7 @@ public class AccountController {
     public ResponseEntity<List<AccountDto>> searchAccountByFilter(
             @RequestBody AccountByFilterDto filterDto,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.searchAccountByFilter(filterDto, currentAuthUserId));
     }
 
@@ -103,7 +103,7 @@ public class AccountController {
     public ResponseEntity<AccountDto> getAccountById(
             @PathVariable Long id,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.getAccountById(id, currentAuthUserId));
     }
 
@@ -120,7 +120,7 @@ public class AccountController {
             @RequestParam(required = false) String country,
             @RequestParam(required = false) String city,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
 
         AccountSearchDto params = AccountSearchDto.builder()
                 .ids(ids)
@@ -147,7 +147,7 @@ public class AccountController {
     public ResponseEntity<List<AccountDto>> getAccountIds(
             @RequestParam Long[] ids,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.getAccountIds(ids, currentAuthUserId));
     }
 

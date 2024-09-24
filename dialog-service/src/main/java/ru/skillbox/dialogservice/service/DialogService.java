@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.skillbox.dialogservice.exception.NotFoundException;
@@ -15,6 +16,7 @@ import ru.skillbox.dialogservice.repository.DialogRepository;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +28,9 @@ public class DialogService {
     private static final String MEMBER_1 = "member1Id";
     private static final String MEMBER_2 = "member2Id";
     public Page<DialogDto> getDialogs(int page,
-                                      String sort,
-                                      Long currentAuthUserId) {
+                                      String sort) {
+
+        long currentAuthUserId = Long.parseLong(Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication().getName()));
 
         String[] sorts = sort.split(",");
         Pageable nextPage = PageRequest.of(page, Integer.MAX_VALUE,
@@ -80,22 +83,24 @@ public class DialogService {
     }
 
     @Transactional
-    public DialogDto getDialog(Long authUserId, Long partnerId) {
+    public DialogDto getDialog(Long partnerId) {
+        long currentAuthUserId = Long.parseLong(Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication().getName()));
         DialogDto dialogDto = dialogMapper.toDialogDto(
-                dialogRepository.findAll(getDialogSpecification(authUserId, partnerId))
+                dialogRepository.findAll(getDialogSpecification(currentAuthUserId, partnerId))
                         .stream()
                         .findFirst()
-                        .orElseGet(() -> createNewDialog(authUserId, partnerId))
+                        .orElseGet(() -> createNewDialog(currentAuthUserId, partnerId))
         );
         log.info("Get dialog dialog id {}", dialogDto);
         return dialogDto;
     }
 
     @Transactional
-    public DialogDto updateDialog(Long authUserId, Long id) {
+    public DialogDto updateDialog(Long id) {
+        long currentAuthUserId = Long.parseLong(Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication().getName()));
         Dialog dialog = getDialogById(id);
         dialog.setUnreadCount(0);
-        messageService.updateDialogMessages(authUserId, id);
+        messageService.updateDialogMessages(currentAuthUserId, id);
         log.info("Update dialog id - {}", id);
         return dialogMapper.toDialogDto(
                 dialogRepository.save(

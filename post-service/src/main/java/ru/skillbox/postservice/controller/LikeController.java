@@ -25,7 +25,7 @@ public class LikeController {
             @PathVariable("id") Long postId,
             @RequestBody LikeDto likeDto,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         likeService.likePost(postId, likeDto, currentAuthUserId);
     }
 
@@ -35,7 +35,7 @@ public class LikeController {
     public void unLikePost(
             @PathVariable("id") Long postId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         likeService.unlikePost(postId, currentAuthUserId);
     }
 
@@ -46,7 +46,7 @@ public class LikeController {
             @PathVariable("id") Long postId,
             @PathVariable("commentId") Long commentId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         likeService.likeComment(postId, commentId, currentAuthUserId);
     }
 
@@ -57,7 +57,7 @@ public class LikeController {
             @PathVariable("id") Long postId,
             @PathVariable("commentId") Long commentId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         likeService.unlikeComment(postId, commentId, currentAuthUserId);
     }
 }

@@ -41,7 +41,7 @@ public class PostController {
     public void updatePostById(
             @RequestBody PostDto postDto,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         postService.updatePost(postDto, currentAuthUserId);
     }
 
@@ -50,7 +50,7 @@ public class PostController {
     @Operation(summary = "Delete post by ID")
     public void deletePostById(@PathVariable("id") Long postId,
                                HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         postService.deletePostById(postId, currentAuthUserId);
     }
 
@@ -72,7 +72,7 @@ public class PostController {
             @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "sort") List<String> sort,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         if (page == -1) {
             page = 0;
         }
@@ -102,13 +102,12 @@ public class PostController {
             @RequestParam(value = "publishDate", required = false) Long publishDateEpochMillis,
             @RequestBody PostDto postDto,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
         if (Objects.isNull(publishDateEpochMillis)) {
             postDto.setType(PostType.POSTED);
         } else {
             postDto.setType(PostType.QUEUED);
         }
-        postService.createNewPost(postDto, currentAuthUserId);
+        postService.createNewPost(postDto, request);
     }
 }
 

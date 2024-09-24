@@ -25,7 +25,7 @@ public class UserSecurityController {
     @Operation(summary = "Change password")
     public void changePassword(@RequestBody ChangePasswordRequest changePasswordRequest,
                                HttpServletRequest request) {
-        long userId = Long.parseLong(request.getParameter("id"));
+        long userId = Long.parseLong(request.getHeader("id"));
         userSecurityDataService.changePassword(changePasswordRequest, userId);
     }
 
@@ -34,7 +34,7 @@ public class UserSecurityController {
     public ResponseEntity<SimpleResponse> sendChangeEmailRequest(@RequestBody ChangeEmailRequest changeEmailRequest,
                                                                  HttpServletRequest request) throws NoSuchAlgorithmException {
 
-        long userId = Long.parseLong(request.getParameter("id"));
+        long userId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(userSecurityDataService.sendEmailChangeRequestToEmail(changeEmailRequest, userId));
     }
 

@@ -3,7 +3,6 @@ package ru.skillbox.dialogservice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -25,28 +24,22 @@ public class DialogController {
 
     @PutMapping("/{id}")
     public DialogDto updateDialog(
-            @PathVariable Long id,
-            HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
-        return dialogService.updateDialog(currentAuthUserId, id);
+            @PathVariable Long id) {
+        return dialogService.updateDialog(id);
     }
 
     @GetMapping
     @Operation(summary = "Get dialogs")
     public Page<DialogDto> getDialogs(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "unreadCount,desc") String sort,
-            HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
-        return dialogService.getDialogs(page, sort, currentAuthUserId);
+            @RequestParam(defaultValue = "unreadCount,desc") String sort) {
+        return dialogService.getDialogs(page, sort);
     }
 
     @GetMapping("/unread")
     @Operation(summary = "Get Unread")
-    public CountDto getUnread(
-            HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
-        return messageService.getUnread(currentAuthUserId);
+    public CountDto getUnread() {
+        return messageService.getUnread();
     }
 
     @GetMapping("/messages")
@@ -54,18 +47,14 @@ public class DialogController {
     public Page<MessageDto> getMessages(
             @RequestParam Long recipientId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "time,asc") String sort,
-            HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
-        return messageService.getMessages(currentAuthUserId, recipientId, page, sort);
+            @RequestParam(defaultValue = "time,asc") String sort) {
+        return messageService.getMessages(recipientId, page, sort);
     }
 
     @GetMapping("/recipientId/{id}")
     @Operation(summary = "Get dialog")
     public DialogDto getDialog(
-            @PathVariable long id,
-            HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
-        return dialogService.getDialog(currentAuthUserId, id);
+            @PathVariable long id) {
+        return dialogService.getDialog(id);
     }
 }

@@ -32,7 +32,7 @@ public class FriendController {
     public void addFriend(
             @PathVariable("id") Long accountId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         friendshipService.requestFriendship(currentAuthUserId, accountId);
     }
 
@@ -42,7 +42,7 @@ public class FriendController {
     public void deleteFriendship(
             @PathVariable("id") Long accountId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         friendshipService.deleteFriendship(currentAuthUserId, accountId);
     }
 
@@ -51,7 +51,7 @@ public class FriendController {
     public void approveFriend(
             @PathVariable("id") Long accountId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         friendshipService.approveFriendship(currentAuthUserId, accountId);
     }
 
@@ -61,7 +61,7 @@ public class FriendController {
     public void blockFriend(
             @PathVariable("id") Long accountId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         friendshipService.blockAccount(currentAuthUserId, accountId);
     }
 
@@ -80,7 +80,7 @@ public class FriendController {
     public void subscribe(
             @PathVariable("id") Long accountId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         friendshipService.subscribeToAccount(currentAuthUserId, accountId);
     }
 
@@ -90,7 +90,7 @@ public class FriendController {
             @RequestParam StatusCode statusCode,
             @RequestParam(defaultValue = "3") int size,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(friendshipService.getFriendsByStatus(statusCode, size, currentAuthUserId));
     }
 
@@ -98,7 +98,7 @@ public class FriendController {
     @Operation(summary = "Get by recommendation")
     public ResponseEntity<List<RecommendedFriendDto>> getByRecommendation(
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(friendshipService.getFriendRecommendations(currentAuthUserId));
     }
 
@@ -112,7 +112,7 @@ public class FriendController {
     @Operation(summary = "Count request")
     public ResponseEntity<CountDto> requestCount(
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(new CountDto(friendshipService.getFriendRequestCount(currentAuthUserId)));
     }
 }

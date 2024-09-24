@@ -32,7 +32,7 @@ public class CommentController {
             @PathVariable("id") Long postId,
             @RequestBody CommentDto commentDto,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         commentService.updateComment(postId, commentDto, currentAuthUserId);
     }
 
@@ -43,7 +43,7 @@ public class CommentController {
             @PathVariable("id") Long postId,
             @PathVariable Long commentId,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         commentService.deleteComment(postId, commentId, currentAuthUserId);
     }
 
@@ -56,7 +56,7 @@ public class CommentController {
             @RequestParam("sort") List<String> sort,
             @RequestParam(value = "isDeleted", defaultValue = "false") boolean isDeleted,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         PageRequest pageRequest = PageRequest.of(page, size, SortCreatorUtil.createSort(sort));
         return ResponseEntity.ok(commentService.getCommentsOnPost(postId, pageRequest, currentAuthUserId, isDeleted));
     }
@@ -67,7 +67,7 @@ public class CommentController {
     public void createComment(@PathVariable("id") Long postId,
                               @RequestBody CommentDto commentDto,
                               HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         commentService.createNewComment(postId, commentDto, currentAuthUserId);
     }
 
@@ -81,7 +81,7 @@ public class CommentController {
             @RequestParam("sort") List<String> sort,
             @RequestParam(value = "isDeleted", defaultValue = "false") boolean isDeleted,
             HttpServletRequest request) {
-        long currentAuthUserId = Long.parseLong(request.getParameter("id"));
+        Long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         Pageable pageable = PageRequest.of(page, size, SortCreatorUtil.createSort(sort));
         return ResponseEntity.ok(commentService.getSubComments(postId, commentId, pageable, currentAuthUserId, isDeleted));
     }
