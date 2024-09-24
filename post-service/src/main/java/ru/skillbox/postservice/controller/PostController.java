@@ -3,6 +3,7 @@ package ru.skillbox.postservice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,7 +40,8 @@ public class PostController {
     @Operation(summary = "Update post by ID")
     public void updatePostById(
             @RequestBody PostDto postDto,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         postService.updatePost(postDto, currentAuthUserId);
     }
 
@@ -47,7 +49,8 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Delete post by ID")
     public void deletePostById(@PathVariable("id") Long postId,
-                               @RequestHeader("id") Long currentAuthUserId) {
+                               HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         postService.deletePostById(postId, currentAuthUserId);
     }
 
@@ -68,7 +71,8 @@ public class PostController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "sort") List<String> sort,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         if (page == -1) {
             page = 0;
         }
@@ -97,13 +101,13 @@ public class PostController {
     public void createPost(
             @RequestParam(value = "publishDate", required = false) Long publishDateEpochMillis,
             @RequestBody PostDto postDto,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
         if (Objects.isNull(publishDateEpochMillis)) {
             postDto.setType(PostType.POSTED);
         } else {
             postDto.setType(PostType.QUEUED);
         }
-        postService.createNewPost(postDto, currentAuthUserId);
+        postService.createNewPost(postDto, request);
     }
 }
 

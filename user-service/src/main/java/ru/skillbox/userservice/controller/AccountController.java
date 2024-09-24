@@ -44,7 +44,8 @@ public class AccountController {
     @GetMapping("/me")
     @Operation(summary = "Get user account")
     public ResponseEntity<AccountDto> getUserAccount(
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.getAccountById(currentAuthUserId, currentAuthUserId));
     }
 
@@ -52,33 +53,38 @@ public class AccountController {
     @Operation(summary = "Update user account")
     public ResponseEntity<AccountDto> updateUserAccount(
             @Valid @RequestBody AccountDto accountDto,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.updateUserAccount(accountDto, currentAuthUserId));
     }
 
     @DeleteMapping("/me")
     @Operation(summary = "Delete user account")
-    public ResponseEntity<String> deleteUserAccount(@RequestHeader("id") Long currentAuthUserId) {
+    public ResponseEntity<String> deleteUserAccount(
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.deleteUserAccount(currentAuthUserId));
     }
 
     @GetMapping
     @Operation(summary = "Get all accounts")
     public ResponseEntity<Page<AccountDto>> getAllAccounts(
-            @RequestParam(value = "page",defaultValue = "0") int page,
-            @RequestParam(value = "size",defaultValue = "5") int size,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size,
             @RequestParam(value = "sort") List<String> sort,
-            @RequestHeader Long id) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService
-                .getAllAccounts(PageRequest.of(page,size,
-                        SortCreatorUtil.createSort(sort)), id));
+                .getAllAccounts(PageRequest.of(page, size,
+                        SortCreatorUtil.createSort(sort)), currentAuthUserId));
     }
 
     @PostMapping
     @Operation(summary = "Create user account")
     public ResponseEntity<Long> createAccount(
             @RequestBody AccountDto accountDto,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.createAccount(accountDto, currentAuthUserId));
     }
@@ -87,7 +93,8 @@ public class AccountController {
     @Operation(summary = "Search account by filter")
     public ResponseEntity<List<AccountDto>> searchAccountByFilter(
             @RequestBody AccountByFilterDto filterDto,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.searchAccountByFilter(filterDto, currentAuthUserId));
     }
 
@@ -95,7 +102,8 @@ public class AccountController {
     @Operation(summary = "Get user account by id")
     public ResponseEntity<AccountDto> getAccountById(
             @PathVariable Long id,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.getAccountById(id, currentAuthUserId));
     }
 
@@ -111,7 +119,8 @@ public class AccountController {
             @RequestParam(required = false) Integer ageTo,
             @RequestParam(required = false) String country,
             @RequestParam(required = false) String city,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
 
         AccountSearchDto params = AccountSearchDto.builder()
                 .ids(ids)
@@ -137,9 +146,11 @@ public class AccountController {
     @Operation(summary = "Get account IDs")
     public ResponseEntity<List<AccountDto>> getAccountIds(
             @RequestParam Long[] ids,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(accountService.getAccountIds(ids, currentAuthUserId));
     }
+
     //----------------------------ADMIN-ACCESS---------------------------
     @PostMapping("/statistic")
     @Operation(summary = "Get users statistics")

@@ -24,25 +24,22 @@ public class DialogController {
 
     @PutMapping("/{id}")
     public DialogDto updateDialog(
-            @PathVariable Long id,
-            @RequestHeader("id") Long currentAuthUserId) {
-        return dialogService.updateDialog(currentAuthUserId, id);
+            @PathVariable Long id) {
+        return dialogService.updateDialog(id);
     }
 
     @GetMapping
     @Operation(summary = "Get dialogs")
     public Page<DialogDto> getDialogs(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "unreadCount,desc") String sort,
-            @RequestHeader("id") Long currentAuthUserId) {
-        return dialogService.getDialogs(page, sort, currentAuthUserId);
+            @RequestParam(defaultValue = "unreadCount,desc") String sort) {
+        return dialogService.getDialogs(page, sort);
     }
 
     @GetMapping("/unread")
     @Operation(summary = "Get Unread")
-    public CountDto getUnread(
-            @RequestHeader("id") Long currentAuthUserId) {
-        return messageService.getUnread(currentAuthUserId);
+    public CountDto getUnread() {
+        return messageService.getUnread();
     }
 
     @GetMapping("/messages")
@@ -50,16 +47,14 @@ public class DialogController {
     public Page<MessageDto> getMessages(
             @RequestParam Long recipientId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "time,asc") String sort,
-            @RequestHeader("id") Long currentAuthUserId) {
-        return messageService.getMessages(currentAuthUserId, recipientId, page, sort);
+            @RequestParam(defaultValue = "time,asc") String sort) {
+        return messageService.getMessages(recipientId, page, sort);
     }
 
     @GetMapping("/recipientId/{id}")
     @Operation(summary = "Get dialog")
     public DialogDto getDialog(
-            @PathVariable long id,
-            @RequestHeader("id") Long currentAuthUserId) {
-        return dialogService.getDialog(currentAuthUserId, id);
+            @PathVariable long id) {
+        return dialogService.getDialog(id);
     }
 }

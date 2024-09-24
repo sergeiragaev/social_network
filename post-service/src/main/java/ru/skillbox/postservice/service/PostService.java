@@ -1,5 +1,6 @@
 package ru.skillbox.postservice.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +30,7 @@ import ru.skillbox.commonlib.util.ColumnsUtil;
 import ru.skillbox.postservice.util.PostValidatorUtil;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -89,22 +91,23 @@ public class PostService {
                 postSpecificationService.getSpecificationByDto(postSearchDto, userId);
         Page<Post> postsPage = postRepository.findAll(postSpecification, pageable);
         List<PostDto> content = postsPage.get().map(postMapper::postToPostDto).toList();
-        content = content.stream()
-                .map(postDto -> {
-                    List<ReactionDto> allReactionsOnPost = likeRepository.findReactionsGroupedByType(
-                            LikeEntityType.POST,
-                            postDto.getId()
-                    );
-                    postDto.setReactions(allReactionsOnPost);
-                    Optional<Like> myLike = likeRepository.findByEntityTypeAndEntityIdAndUserId(LikeEntityType.POST, postDto.getId(), userId);
-                    postDto.setMyLike(myLike.isPresent());
-                    myLike.ifPresent(like -> postDto.setMyReaction(like.getReactionType()));
-                    Long likesAmount = likeRepository.countAllByEntityTypeAndEntityId(LikeEntityType.POST, postDto.getId());
-                    postDto.setLikeAmount(likesAmount);
-                    Long commentsCount = commentRepository.countByPostId(postDto.getId());
-                    postDto.setCommentsCount(commentsCount);
-                    return postDto;
-                }).toList();
+        List<PostDto> list = new ArrayList<>();
+        for (PostDto postDto : content) {
+            List<ReactionDto> allReactionsOnPost = likeRepository.findReactionsGroupedByType(
+                    LikeEntityType.POST,
+                    postDto.getId()
+            );
+            postDto.setReactions(allReactionsOnPost);
+            Optional<Like> myLike = likeRepository.findByEntityTypeAndEntityIdAndUserId(LikeEntityType.POST, postDto.getId(), userId);
+            postDto.setMyLike(myLike.isPresent());
+            myLike.ifPresent(like -> postDto.setMyReaction(like.getReactionType()));
+            Long likesAmount = likeRepository.countAllByEntityTypeAndEntityId(LikeEntityType.POST, postDto.getId());
+            postDto.setLikeAmount(likesAmount);
+            Long commentsCount = commentRepository.countByPostId(postDto.getId());
+            postDto.setCommentsCount(commentsCount);
+            list.add(postDto);
+        }
+        content = list;
         return buildPagePostDto(pageable, postsPage, content);
     }
 
@@ -125,7 +128,8 @@ public class PostService {
     }
 
     @Transactional
-    public Post createNewPost(PostDto postDto, long currentAuthUserId) {
+    public Post createNewPost(PostDto postDto, HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         if (postDto.getPublishDate() != null) {
             postDto.setType(PostType.QUEUED);
         } else {
