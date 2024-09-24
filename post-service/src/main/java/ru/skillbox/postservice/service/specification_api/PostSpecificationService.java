@@ -9,13 +9,12 @@ import ru.skillbox.postservice.model.entity.Post;
 import ru.skillbox.postservice.model.entity.Tag;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class PostSpecificationService {
     private static final String AUTHOR_ID = "authorId";
-    public Specification<Post> getSpecificationByDto(PostSearchDto postSearchDto, Long currenAuthUserID) {
+    public Specification<Post> getSpecificationByDto(PostSearchDto postSearchDto) {
         return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(builder.or(builder.equal(root.get("type"), PostType.POSTED)));
@@ -59,9 +58,9 @@ public class PostSpecificationService {
 
     }
 
+    // TODO: сделать когда будет полностью готова FriendShip-логика
     private static void addFriendsPredicate(PostSearchDto postSearchDto) {
         if (postSearchDto.getWithFriends() != null) {
-            // сделать когда будет полностью готова FriendShip-логика
         }
     }
 

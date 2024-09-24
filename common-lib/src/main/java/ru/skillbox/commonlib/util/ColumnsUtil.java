@@ -1,6 +1,7 @@
 package ru.skillbox.commonlib.util;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -10,6 +11,7 @@ import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class ColumnsUtil {
     public static String[] getNullPropertyNames(Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
@@ -34,7 +36,7 @@ public class ColumnsUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
     private ColumnsUtil() {}

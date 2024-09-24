@@ -10,12 +10,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import ru.skillbox.commonlib.dto.account.StatusCode;
-import ru.skillbox.userservice.model.dto.FriendDto;
 import ru.skillbox.userservice.model.dto.FriendSearchDto;
 import ru.skillbox.userservice.model.dto.FriendShortDto;
 import ru.skillbox.userservice.service.FriendshipService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.Mockito.*;

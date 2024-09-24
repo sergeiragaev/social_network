@@ -12,7 +12,6 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.skillbox.commonlib.dto.account.Role;
 import ru.skillbox.commonlib.dto.account.StatusCode;
-import ru.skillbox.userservice.model.dto.FriendDto;
 import ru.skillbox.userservice.model.dto.FriendShortDto;
 import ru.skillbox.userservice.model.entity.FriendshipId;
 import ru.skillbox.userservice.model.entity.User;

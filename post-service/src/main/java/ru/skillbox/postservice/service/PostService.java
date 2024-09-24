@@ -88,7 +88,7 @@ public class PostService {
     @Transactional
     public PagePostDto searchPosts(PostSearchDto postSearchDto, Pageable pageable, Long userId) {
         Specification<Post> postSpecification =
-                postSpecificationService.getSpecificationByDto(postSearchDto, userId);
+                postSpecificationService.getSpecificationByDto(postSearchDto);
         Page<Post> postsPage = postRepository.findAll(postSpecification, pageable);
         List<PostDto> content = postsPage.get().map(postMapper::postToPostDto).toList();
         List<PostDto> list = new ArrayList<>();
