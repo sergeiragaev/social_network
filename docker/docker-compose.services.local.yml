@@ -1,6 +1,6 @@
 services:
   discovery:
-    image: skillboxgroup/discovery:0.0.1-SNAPSHOT
+    image: ragaev/discovery:0.0.1-SNAPSHOT
     ports:
       - "8761:8761"
     restart: on-failure
@@ -11,7 +11,7 @@ services:
       retries: 5
 
   authentication:
-    image: skillboxgroup/authentication:0.0.1-SNAPSHOT
+    image: ragaev/authentication:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -28,7 +28,7 @@ services:
       - discovery
 
   dialog-service:
-    image: skillboxgroup/dialog-service:0.0.1-SNAPSHOT
+    image: ragaev/dialog-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -44,7 +44,7 @@ services:
       - discovery
 
   notification-service:
-    image: skillboxgroup/notification-service:0.0.1-SNAPSHOT
+    image: ragaev/notification-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -59,7 +59,7 @@ services:
       - discovery
 
   post-service:
-    image: skillboxgroup/post-service:0.0.1-SNAPSHOT
+    image: ragaev/post-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -74,7 +74,7 @@ services:
       - discovery
 
   user-service:
-    image: skillboxgroup/user-service:0.0.1-SNAPSHOT
+    image: ragaev/user-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -89,7 +89,7 @@ services:
       - discovery
 
   admin-service:
-    image: skillboxgroup/admin-service:0.0.1-SNAPSHOT
+    image: ragaev/admin-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -101,7 +101,7 @@ services:
       - discovery
 
   geo-service:
-    image: skillboxgroup/geo-service:0.0.1-SNAPSHOT
+    image: ragaev/geo-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -114,7 +114,7 @@ services:
       - discovery
 
   audit-service:
-    image: skillboxgroup/audit-service:0.0.1-SNAPSHOT
+    image: ragaev/audit-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -129,7 +129,7 @@ services:
       - discovery
 
   gateway:
-    image: skillboxgroup/gateway:0.0.1-SNAPSHOT
+    image: ragaev/gateway:0.0.1-SNAPSHOT
     ports:
       - "9090:9090"
     environment:

@@ -182,7 +182,7 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.4.13</version>
 				<configuration>
-					<repository>skillboxgroup/audit-service</repository>
+					<repository>ragaev/audit-service</repository>
 				</configuration>
 			</plugin>
 			<plugin>

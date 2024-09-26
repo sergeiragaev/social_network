@@ -74,7 +74,7 @@ services:
     restart: on-failure
 
   frontend:
-    image: skillboxgroup/frontend:local
+    image: ragaev/frontend:local
     ports:
       - "80:80"
     tty: true

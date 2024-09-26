@@ -206,7 +206,7 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.4.13</version>
 				<configuration>
-					<repository>skillboxgroup/dialog-service</repository>
+					<repository>ragaev/dialog-service</repository>
 				</configuration>
 			</plugin>
 			<plugin>

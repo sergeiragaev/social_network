@@ -3554,8 +3554,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "socialnetwork.ragaev.keenetic.pro",
-          "value": "socialnetwork.ragaev.keenetic.pro"
+          "text": "176.109.108.152",
+          "value": "176.109.108.152"
         },
         "datasource": "Prometheus",
         "definition": "",

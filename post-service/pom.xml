@@ -187,7 +187,7 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.4.13</version>
 				<configuration>
-					<repository>skillboxgroup/post-service</repository>
+					<repository>ragaev/post-service</repository>
 				</configuration>
 			</plugin>
 			<plugin>

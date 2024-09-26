@@ -63,7 +63,7 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.4.13</version>
 				<configuration>
-					<repository>skillboxgroup/discovery</repository>
+					<repository>ragaev/discovery</repository>
 				</configuration>
 			</plugin>
 		</plugins>

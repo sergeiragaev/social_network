@@ -185,7 +185,7 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.4.13</version>
                 <configuration>
-                    <repository>skillboxgroup/notification-service</repository>
+                    <repository>ragaev/notification-service</repository>
                 </configuration>
             </plugin>
             <plugin>

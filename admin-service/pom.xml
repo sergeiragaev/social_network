@@ -93,7 +93,7 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.4.13</version>
                 <configuration>
-                    <repository>skillboxgroup/admin-service</repository>
+                    <repository>ragaev/admin-service</repository>
                 </configuration>
             </plugin>
         </plugins>

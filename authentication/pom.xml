@@ -222,7 +222,7 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.4.13</version>
 				<configuration>
-					<repository>skillboxgroup/authentication</repository>
+					<repository>ragaev/authentication</repository>
 				</configuration>
 			</plugin>
 			<plugin>

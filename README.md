@@ -51,9 +51,9 @@ Code Lounge - социальная сеть с уклоном на аудито�
 - Изменить в файле ./frontend/src/settings/plugins.js строку на ip вашего сервера:
     Vue.use(chat, { server: 'socialnetwork.ragaev.keenetic.pro' }); // <- для стэнда, чтобы работал websocket.
 - Пересобрать фронт, используя команду докера:
-  docker build --no-cache -f ./frontend/Dockerfile -t "skillboxgroup/frontend" ./frontend
+  docker build --no-cache -f ./frontend/Dockerfile -t "ragaev/frontend" ./frontend
 - Выгрузить образ фронтэнда на докер хаб:
-  docker push "skillboxgroup/frontend"
+  docker push "ragaev/frontend"
 
 ## Примеры использования & Интерфейс
 Взаимодействия пользователя с системой осуществляется через фронтенд. Ниже приведен ряд примеров:

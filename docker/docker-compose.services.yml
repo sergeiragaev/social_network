@@ -1,12 +1,12 @@
 services:
   discovery:
-    image: skillboxgroup/discovery:0.0.1-SNAPSHOT
+    image: ragaev/discovery:0.0.1-SNAPSHOT
     ports:
       - "8761:8761"
     restart: on-failure
 
   authentication:
-    image: skillboxgroup/authentication:0.0.1-SNAPSHOT
+    image: ragaev/authentication:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -14,7 +14,7 @@ services:
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=postgres
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-      - PROD_SERVER_URI=https://socialnetwork.ragaev.keenetic.pro
+      - PROD_SERVER_URI=https://176.109.108.152
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     restart: on-failure
@@ -22,7 +22,7 @@ services:
       - discovery
 
   dialog-service:
-    image: skillboxgroup/dialog-service:0.0.1-SNAPSHOT
+    image: ragaev/dialog-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -36,7 +36,7 @@ services:
       - discovery
 
   notification-service:
-    image: skillboxgroup/notification-service:0.0.1-SNAPSHOT
+    image: ragaev/notification-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -49,7 +49,7 @@ services:
       - discovery
 
   post-service:
-    image: skillboxgroup/post-service:0.0.1-SNAPSHOT
+    image: ragaev/post-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -62,7 +62,7 @@ services:
       - discovery
 
   user-service:
-    image: skillboxgroup/user-service:0.0.1-SNAPSHOT
+    image: ragaev/user-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -75,7 +75,7 @@ services:
       - discovery
 
   admin-service:
-    image: skillboxgroup/admin-service:0.0.1-SNAPSHOT
+    image: ragaev/admin-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -85,7 +85,7 @@ services:
       - discovery
 
   geo-service:
-    image: skillboxgroup/geo-service:0.0.1-SNAPSHOT
+    image: ragaev/geo-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -96,7 +96,7 @@ services:
       - discovery
 
   audit-service:
-    image: skillboxgroup/audit-service:0.0.1-SNAPSHOT
+    image: ragaev/audit-service:0.0.1-SNAPSHOT
     environment:
       - CONFIG_URI=http://discovery:8761
       - EUREKA_URI=http://discovery:8761/eureka
@@ -109,7 +109,7 @@ services:
       - discovery
 
   gateway:
-    image: skillboxgroup/gateway:0.0.1-SNAPSHOT
+    image: ragaev/gateway:0.0.1-SNAPSHOT
     ports:
       - "9090:9090"
     environment:
@@ -128,7 +128,7 @@ services:
       - audit-service
 
   frontend:
-    image: skillboxgroup/frontend
+    image: ragaev/frontend
     ports:
       - "80:80"
     tty: true
