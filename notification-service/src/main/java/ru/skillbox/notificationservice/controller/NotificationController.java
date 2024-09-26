@@ -4,6 +4,7 @@ package ru.skillbox.notificationservice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,8 @@ public class NotificationController {
     @GetMapping("/settings")
     @Operation(summary = "Get notification setting")
     public ResponseEntity<NotificationSettingsDto> getNotificationSetting(
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+            long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(notificationService.getSettings(currentAuthUserId));
     }
 
@@ -31,7 +33,8 @@ public class NotificationController {
     @Operation(summary = "Update notification setting")
     public ResponseEntity<NotificationSettingsDto> updateNotificationSettings(
             @RequestBody SettingRq settingsData,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(notificationService.updateSettings(settingsData, currentAuthUserId));
     }
 
@@ -39,7 +42,8 @@ public class NotificationController {
     @Operation(summary = "Create notification setting")
     public ResponseEntity<NotificationSettingsDto> createNotificationSetting(
             @RequestBody SettingsDto settingsDto,
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.status(HttpStatus.CREATED).body(notificationService
                 .createSettings(settingsDto, currentAuthUserId));
     }
@@ -48,8 +52,8 @@ public class NotificationController {
     @GetMapping
     @Operation(summary = "Get notification")
     public ResponseEntity<NotificationSentDto> getNotification(
-            @RequestHeader("id") Long currentAuthUserId
-    ) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(notificationService.getNotifications(currentAuthUserId));
     }
 
@@ -64,7 +68,8 @@ public class NotificationController {
     @GetMapping("/count")
     @Operation(summary = "Get notification count")
     public ResponseEntity<NotificationCountRs> getNotificationCount(
-            @RequestHeader("id") Long currentAuthUserId) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         return ResponseEntity.ok(notificationService.getCount(currentAuthUserId));
     }
 
@@ -72,8 +77,8 @@ public class NotificationController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Set readed")
     public void setReaded(
-            @RequestHeader("id") Long currentAuthUserId
-    ) {
+            HttpServletRequest request) {
+        long currentAuthUserId = Long.parseLong(request.getHeader("id"));
         notificationService.setReaded(currentAuthUserId);
     }
 }
