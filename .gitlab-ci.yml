@@ -57,10 +57,10 @@ deploy_prod-job:
     - echo "$SSH_PRIVATE_KEY" | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $PROD_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan -p 2522 $PROD_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - scp -r ./docker $PROD_USER@$PROD_HOST:~
+    - scp  -r -P 2522 ./docker $PROD_USER@$PROD_HOST:~
     - ssh -p 2522 $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.services.yml down"
     - ssh -p 2522 $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.yml down"
     - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/discovery:0.0.1-SNAPSHOT"
