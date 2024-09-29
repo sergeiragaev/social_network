@@ -57,24 +57,24 @@ deploy_prod-job:
     - echo "$SSH_PRIVATE_KEY" | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan -p 2522 $PROD_HOST >> ~/.ssh/known_hosts
+    - ssh-keyscan $PROD_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - scp  -r -P 2522 ./docker $PROD_USER@$PROD_HOST:~
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.services.yml down"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.yml down"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/discovery:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/authentication:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/user-service:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/post-service:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/dialog-service:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/notification-service:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/admin-service:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/geo-service:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/audit-service:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/gateway:0.0.1-SNAPSHOT"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker image rm ragaev/frontend:latest --force"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.yml up -d --force-recreate --remove-orphans"
-    - ssh -p 2522 $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.services.yml up -d"
+    - scp  -r ./docker $PROD_USER@$PROD_HOST:~
+    - ssh $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.services.yml down"
+    - ssh $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.yml down"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/discovery:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/authentication:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/user-service:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/post-service:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/dialog-service:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/notification-service:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/admin-service:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/geo-service:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/audit-service:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/gateway:0.0.1-SNAPSHOT"
+    - ssh $PROD_USER@$PROD_HOST "docker image rm ragaev/frontend:latest --force"
+    - ssh $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.yml up -d --force-recreate --remove-orphans"
+    - ssh $PROD_USER@$PROD_HOST "docker compose -f ./docker/docker-compose.services.yml up -d"
   rules:
     - if: $CI_COMMIT_BRANCH == 'develop'
