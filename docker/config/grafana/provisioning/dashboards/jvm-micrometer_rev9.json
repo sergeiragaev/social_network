@@ -3554,8 +3554,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "90.189.180.5",
-          "value": "90.189.180.5"
+          "text": "90.189.180.5:81",
+          "value": "90.189.180.5:81"
         },
         "datasource": "Prometheus",
         "definition": "",
