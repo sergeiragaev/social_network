@@ -130,7 +130,7 @@ services:
   frontend:
     image: ragaev/frontend
     ports:
-      - "80:80"
+      - "81:81"
     tty: true
     restart: on-failure
     volumes:
