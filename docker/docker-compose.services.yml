@@ -14,7 +14,7 @@ services:
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=postgres
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-      - PROD_SERVER_URI=https://90.189.180.5:81
+      - PROD_SERVER_URI=https://socialnetwork.ragaev.keenetic.pro
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     restart: on-failure
