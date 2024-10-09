@@ -9,7 +9,7 @@ Code Lounge - social network primary for developers which providing wide functio
 - 🔑 Registration/Login/Logout
 - 👍 Creating, editing and deleting likes, posts, comments, reactions
 - 💬 Messaging/Friends/Dialogs
-- 🧑‍🎤 Profile personalization
+- 🧑‍🎤 Profile personalisation
 - 🔔 Notification and it's settings
 - ⚙️ Administration and control/Role pattern
 
