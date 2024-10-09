@@ -4,6 +4,8 @@
 ![ex-1](https://imgur.com/rGdqaQn.png)
 ## Description & Summary
 
+Ready to use installation of this application is available on site: https://socialnetwork.ragaev.keenetic.pro
+
 Code Lounge - social network primary for developers which providing wide functionality for users including:
 
 - 🔑 Registration/Login/Logout
@@ -32,8 +34,6 @@ Code Lounge - social network primary for developers which providing wide functio
 - 📡 Axios
 
 *frontend technology stack not fully described, because of project is primary backend one
-
-Ready to use installation of frontend application is available on site: https://socialnetwork.ragaev.keenetic.pro
 
 Grafana is available on site: http://grafana.ragaev.keenetic.pro
 
